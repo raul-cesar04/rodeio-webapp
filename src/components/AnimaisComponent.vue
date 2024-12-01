@@ -45,7 +45,7 @@ import AnimalCardComponent from './AnimalCardComponent.vue';
                 animais: [],
                 animalNomeSearch: '',
                 numberOfPages: 0,
-                currentPage: 0
+                currentPage: 1
             };
         },
         methods: {

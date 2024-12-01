@@ -43,7 +43,7 @@ import CompetidorCardComponent from './CompetidorCardComponent.vue';
                 competidores: [],
                 nomeCompetidorSearch: '',
                 numberOfPages: 0,
-                currentPage: 0
+                currentPage: 1
             };
         },
         methods: {
