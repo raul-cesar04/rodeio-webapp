@@ -1,16 +1,6 @@
 <template>
     <div class="competidores-wrapper">
         <HeaderComponent />
-        <v-form validate-on="submit lazy">
-            <v-autocomplete label = "Nome do Competidor" :items="['alex']" v-model="nomeCompetidor"></v-autocomplete>
-            <v-btn
-            :loading="loading"
-            class="mt-2"
-            text="Pesquisar"
-            type="submit"
-            ></v-btn>
-        </v-form>
-
         <div class="competidores">
             <CompetidoresComponent />
         </div>
