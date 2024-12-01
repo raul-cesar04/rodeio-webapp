@@ -44,7 +44,6 @@ import EventoDataService from '@/services/EventoDataService';
         methods: {
             retrieveEvents(){
                 if(!this.fromUser){
-                    console.log("Get all");
                     EventoDataService.getAll(this.currentPage-1)
                         .then(this.updateResponseData)
                         .catch(err=>console.error(err));

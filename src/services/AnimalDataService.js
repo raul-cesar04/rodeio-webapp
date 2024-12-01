@@ -7,6 +7,10 @@ class AnimalDataService{
     searchAnimal(term){
         return http.get("/animal/search?nome="+term);
     }
+
+    getOne(id){
+        return http.get("/animal/"+id);
+    }
 }
 
 export default new AnimalDataService();
