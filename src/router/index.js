@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import CompetidoresView from '@/views/CompetidoresView.vue'
 import AnimaisView from '@/views/AnimaisView.vue'
 import ResultadosView from '@/views/ResultadosView.vue'
+import CompetidorView from '@/views/CompetidorView.vue'
 
 const routes = [
   {
@@ -14,6 +15,11 @@ const routes = [
     path: '/competidores',
     name: 'competidores',
     component: CompetidoresView
+  },
+  {
+    path: '/competidores/:id',
+    name: 'competidor',
+    component: CompetidorView
   },
   {
     path: '/animais',

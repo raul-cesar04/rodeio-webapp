@@ -27,10 +27,12 @@
 </template>
 
 <script>
+import CompetidorDataService from '@/services/CompetidorDataService';
 import EventoDataService from '@/services/EventoDataService';
 
     export default {
         name: 'EventosComponent',
+        props: ['fromUser'],
         data(){
             return {
                 eventos: [],
@@ -38,11 +40,22 @@ import EventoDataService from '@/services/EventoDataService';
                 currentPage: 1
             };
         },
+
         methods: {
             retrieveEvents(){
-                EventoDataService.getAll(this.currentPage-1)
-                    .then(this.updateResponseData)
-                    .catch(err=>console.error(err));
+                if(!this.fromUser){
+                    console.log("Get all");
+                    EventoDataService.getAll(this.currentPage-1)
+                        .then(this.updateResponseData)
+                        .catch(err=>console.error(err));
+
+                }else{
+                    CompetidorDataService.getEventos(this.fromUser)
+                    .then(response=>{
+                        this.eventos = response.data.map(data=>data.evento);
+                    })
+                    .catch(console.error);
+                }
             },
             updateResponseData(response){
                 this.eventos = response.data.content;
