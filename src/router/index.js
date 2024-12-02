@@ -17,7 +17,10 @@ const routes = [
   {
     path: '/competidores',
     name: 'competidores',
-    component: CompetidoresView
+    component: CompetidoresView,
+    meta: {
+      title: "PRB | Competidores"
+    }
   },
   {
     path: '/competidores/:id',
@@ -27,7 +30,10 @@ const routes = [
   {
     path: '/animais',
     name: 'animais',
-    component: AnimaisView
+    component: AnimaisView,
+    meta: {
+      title: "PRB | Animais"
+    }
   },
   {
     path: '/animais/:id',
@@ -37,7 +43,10 @@ const routes = [
   {
     path: '/resultados',
     name: 'resultados',
-    component: ResultadosView
+    component: ResultadosView,
+    meta: {
+      title: "PRB | Resultados"
+    }
   },
   {
     path: '/proprietarios/:id',
@@ -49,11 +58,17 @@ const routes = [
     name: 'evento',
     component: EventoView
   }
-]
+];
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes
-})
+});
 
-export default router
+router.beforeEach(to=>{
+  const { title } = to.meta;
+  const defaultTitle = "PRB | Profissionais do Rodeio Brasileiro";
+  document.title = title || defaultTitle;
+});
+
+export default router;
