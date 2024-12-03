@@ -18,7 +18,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(competidor, index) in evento.competidores" :key="competidor.id">
+                <tr v-for="(competidor, index) in evento.competidores.sort((a, b)=>a.pontuacao-b.pontuacao)" :key="competidor.id">
                     <td class  = "text-left" >{{index+1}}</td>
                     <td class  = "text-left">
                         <router-link :to = "'/competidores/'+competidor.competidor.id" style="color: inherit">

@@ -15,6 +15,12 @@ class CompetidorDataService{
     getEventos(id){
         return http.get("/competidor/"+id+"/evento");
     }
+
+    subscribeEvento(eventoId, competidorId){
+        return http.post("/competidor/"+competidorId+"/evento", {
+            id: eventoId
+        });
+    }
 }
 
 export default new CompetidorDataService();
