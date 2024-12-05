@@ -17,6 +17,7 @@
         <div v-for = "(animal) in animais" :key="animal.id">
             <AnimalCardComponent :animal-nome="animal.nome" :animal-proprietario="proprietarioToString(animal.proprietario)" :animalId="animal.id" />
         </div>
+        <AddCardAnimal />
     </div>
     <v-pagination
         v-model = "currentPage"
@@ -35,6 +36,7 @@
 <script>
 import AnimalDataService from '@/services/AnimalDataService';
 import AnimalCardComponent from './AnimalCardComponent.vue';
+import AddCardAnimal from './AddCardAnimal.vue';
 
 
 
@@ -73,7 +75,8 @@ import AnimalCardComponent from './AnimalCardComponent.vue';
 
         },
         components: {
-            AnimalCardComponent
+            AnimalCardComponent,
+            AddCardAnimal
         },
         mounted(){
             this.retrieveAnimais();

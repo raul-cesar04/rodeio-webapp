@@ -2,7 +2,7 @@
     <v-card class = "competidor-card" variant="flat">
         <v-card-item class="competidor-card-container add-card" @click = "addDialog = true">
             <svg-icon type="mdi" :path="mdiPlusCircle" size="120"/>
-            <p><strong>Cadastrar Competidor</strong></p>
+            <p><strong>Cadastrar Animal</strong></p>
         </v-card-item>
     </v-card>
 
@@ -10,36 +10,29 @@
         v-model="addDialog"
         width="auto"
     >
-        <v-card max-width="400" title="Cadastrar Competidor">
+        <v-card max-width="400" title="Cadastrar animal">
                 <v-form validate-on="submit lazy" @submit.prevent="submitCadastro">
                     <v-text-field
-                        v-model="competidorCadastroData.nome"
+                        v-model="animal.nome"
                         :rules="rules"
-                        label="Nome do Competidor"
-                        required
-                    />
-                    <v-number-input 
-                        label="Idade do Competidor"
-                        v-model="competidorCadastroData.idade"
-                        :rules="rules"
-                        min="0"
-                        max="99"
+                        label="Nome do animal"
                         required
                     />
                     <v-select 
-                        label="Estado"
-                        v-model="cidadeNatalCadastro.estado"
+                        label="Tropeiro"
+                        v-model="proprietarioData"
                         :rules="rules"
-                        :items="estados.map(e=>e.sigla)"
-                        v-on:update:model-value="loadMunicipios"
+                        :items="getTropeirosSelectData()"
+                        item-value="id"
+                        dense
                         required
                     />
                     <v-select 
-                        label="Cidade"
-                        v-model="cidadeNatalCadastro.municipio"
+                        label="Lado embretamento"
+                        v-model="animal.ladoBrete"
                         :rules="rules"
-                        :items="municipios.map(m=>m.nome)"
-                        :disabled="municipiosInputDisaled"
+                        :items="['CERTO', 'ERRADO']"
+                        dense
                         required
                     />
                     <v-btn 
@@ -90,13 +83,12 @@
 
 <script>
 import SvgIcon from '@jamescoyle/vue-icon';
-import { VNumberInput } from "vuetify/labs/VNumberInput";
 import { mdiPlusCircle } from "@mdi/js";
-import CompetidorDataService from '@/services/CompetidorDataService';
-import IBGEDataService from '@/services/IBGEDataService';
+import TropeiroDataService from '@/services/TropeiroDataService';
+import AnimalDataService from '@/services/AnimalDataService';
 
 export default{
-    name: 'AddCardAnimal',
+    name: 'AddCardComponent',
     data(){
         return {
             mdiPlusCircle,
@@ -111,46 +103,41 @@ export default{
                     return "Campo obrigatório";
                 }
             ],
-            competidorCadastroData: {},
-            cidadeNatalCadastro: {},
-            estados: [],
-            municipios: [],
-            municipiosInputDisaled: true
+            animal: {},
+            proprietarioData: null,
+            tropeiros: {}
         }
     },
     components: {
-        SvgIcon,
-        VNumberInput
+        SvgIcon
     },
     methods:{
-        loadMunicipios(){
-            if(!this.cidadeNatalCadastro.estado){
-                return;
-            }
-            this.municipiosInputDisaled = false;
-            this.cidadeNatalCadastro.municipio = null;
-            IBGEDataService.getMunicipios(this.cidadeNatalCadastro.estado)
-                .then(response=>{
-                    this.municipios = response.data;
-                })
-                .catch(console.error);
-        },
-
         submitCadastro(){
-            if(!this.competidorCadastroData.nome || !this.competidorCadastroData.idade) return;
+            if(!this.animal.nome || !this.animal.ladoBrete) return;
 
-            if(!this.cidadeNatalCadastro.municipio || !this.cidadeNatalCadastro.estado) return;
+            if(!this.proprietarioData) return;
 
-            CompetidorDataService.createCompetidor(this.competidorCadastroData, this.cidadeNatalCadastro)
+            AnimalDataService.createAnimal(this.animal, this.proprietarioData)
                 .then(()=>{
-                    this.cidadeNatalCadastro = {};
-                    this.competidorCadastroData = {};
+                    this.animal = {};
+                    this.proprietarioData = null;
                     this.addDialog = false;
                     this.showSucess();
                 }).catch((err)=>{
                     console.error(err);
                     this.showFailure();
                 });
+        },
+
+        getTropeirosSelectData(){
+            const items = [];
+            for(let tropeiro in this.tropeiros){
+                const obj = this.tropeiros[tropeiro];
+                obj["title"] = obj.nome; 
+                items.push(obj);
+            }
+
+            return items;
         },
 
         showFailure(){
@@ -169,9 +156,12 @@ export default{
     },  
     mounted(){
 
-        IBGEDataService.getEstados()
+        TropeiroDataService.getAll()
             .then(response=>{
-                this.estados=response.data
+                const _tropeiros = response.data.content;
+                _tropeiros.map(t=>{
+                    this.tropeiros[t.id] = t;
+                });
             })
             .catch(console.error);
     }
