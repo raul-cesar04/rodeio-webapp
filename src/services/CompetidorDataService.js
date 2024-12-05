@@ -1,7 +1,7 @@
 import http from "@/services/external-api/http-common";
 class CompetidorDataService{
     getAll(page = 0){
-        return http.get("/competidor?size=12&page="+page);
+        return http.get("/competidor?size=11&page="+page);
     }
 
     getOne(id){
@@ -14,6 +14,17 @@ class CompetidorDataService{
 
     getEventos(id){
         return http.get("/competidor/"+id+"/evento");
+    }
+
+    createCompetidor(competidorData, cidadeNatal){
+        return http.post("/competidor", {
+            nome: competidorData.nome,
+            idade: competidorData.idade,
+            cidadeNatal:{
+                cidade: cidadeNatal.municipio,
+                estado: cidadeNatal.estado
+            }
+        });
     }
 
     subscribeEvento(eventoId, competidorId){

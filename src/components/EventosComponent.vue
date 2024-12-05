@@ -77,6 +77,7 @@ import { mdiAccountCowboyHat, mdiDelete, mdiAccountCheck } from "@mdi/js";
                 competidoresDisponiveis: [],
                 competidorTermo: "",    
 
+                // Icons
                 mdiAccountCowboyHat,
                 mdiAccountCheck,
                 mdiDelete

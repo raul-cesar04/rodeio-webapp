@@ -5,4 +5,6 @@
     --background-color: #060306ff;
     --text-color: #F5F5F5ff;
     --link-color: #ecece5;
+    --sucess-color: rgb(65, 255, 65);
+    --failure-color: rgb(255, 65, 65);
 }

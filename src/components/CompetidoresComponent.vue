@@ -17,6 +17,7 @@
         <div v-for = "(competidor) in competidores" :key="competidor.id">
             <CompetidorCardComponent :competidorNome="competidor.nome" :competidorCidade="cidadeNatalToString(competidor.cidadeNatal)" :competidorId="competidor.id" />
         </div>
+        <AddCardComponent />    
     </div>
     <v-pagination
         v-model = "currentPage"
@@ -35,6 +36,7 @@
 <script>
 import CompetidorDataService from '@/services/CompetidorDataService';
 import CompetidorCardComponent from './CompetidorCardComponent.vue';
+import AddCardComponent from './AddCardComponent.vue';
 
     export default {
         name: 'CompetidoresComponent',
@@ -71,7 +73,8 @@ import CompetidorCardComponent from './CompetidorCardComponent.vue';
 
         },
         components: {
-            CompetidorCardComponent
+            CompetidorCardComponent,
+            AddCardComponent
         },
         mounted(){
             this.retrieveCompetidores();
