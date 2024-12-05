@@ -7,6 +7,7 @@ import CompetidorView from '@/views/CompetidorView.vue'
 import AnimalView from '@/views/AnimalView.vue'
 import ProprietarioView from '@/views/ProprietarioView.vue'
 import EventoView from '@/views/EventoView.vue'
+import CadastroTropeiroView from '@/views/CadastroTropeiroView.vue'
 
 const routes = [
   {
@@ -57,6 +58,11 @@ const routes = [
     path: '/eventos/:id',
     name: 'evento',
     component: EventoView
+  },
+  {
+    path: '/novo-tropeiro',
+    name: 'novo-tropeiro',
+    component: CadastroTropeiroView
   }
 ];
 

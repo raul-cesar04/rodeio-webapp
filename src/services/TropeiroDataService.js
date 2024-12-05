@@ -8,6 +8,14 @@ class TropeiroDataService{
     getAll(){
         return http.get("/tropeiro");
     }
+
+    createTropeiro(tropeiroData, bullData){
+        return http.post("/tropeiro", {
+            nome: tropeiroData.nome,
+            sigla: tropeiroData.sigla,
+            boiada: bullData
+        });
+    }
 }
 
 export default new TropeiroDataService();
